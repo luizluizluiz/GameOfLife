@@ -52,6 +52,16 @@ textarea {
 }
 
 
+@media(max-width:1200px) {
+        .container {
+            margin: 0 50px;
+        }
+
+        #lifeGrid {
+            width: 100%;
+        }
+}
+
 /* ===== Initializr Styles ==================================================
    Author: Jonathan Verrecchia - verekia.com/initializr/responsive-template
    ========================================================================== */
@@ -66,29 +76,31 @@ body {
 }
 
 /* ===================
-    ALL: Orange Theme
+    ALL: Mindvalley Color Theme
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #e44d26;
+    border-bottom: 4px solid #ffba00;
 }
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #e44d26;
+    border-top: 4px solid #ffba00;
 }
 
 .header-container,
 .footer-container,
 .main aside {
-    background: #f16529;
+    background: #FFFFFF;
+    text-align: center;
 }
 
 .title {
-    color: white;
+    color: gray;
+    text-align: center;
 }
 
-/* ==============
+/* ============== 
     MOBILE: Menu
    ============== */
 
@@ -108,7 +120,7 @@ nav a {
     font-weight: bold;
 
     color: white;
-    background: #e44d26;
+    background: #f69300;
 }
 
 nav a:hover,
@@ -138,7 +150,7 @@ nav a:hover {
 }
 
 .footer-container footer {
-    color: white;
+    color: gray;
     padding: 20px 0;
 }
 
