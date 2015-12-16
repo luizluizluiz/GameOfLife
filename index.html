@@ -22,8 +22,10 @@
         <script src="js/darthvader.js"></script>
         <script type="text/javascript">
         $('document').ready(function() {
-            life.initLifeGrid('#lifeGrid');
-            
+            life.initLifeGrid('#lifeGrid', true);
+            window.onresize = function() {
+                life.initLifeGrid('#lifeGrid', false);
+           }
         });
        </script>
     </head>
@@ -37,30 +39,38 @@
                 <h1 class="title">Conway's Game of Life</h1>
                 <nav>
                     <ul>
-                        <li><a href="#" onClick="life.startStopLife();">Start / Stop</a></li>
-                        <li><a href="#" onclick="life.nextLife();">Next Step</a></li>
-                        <li><a href="#" onclick="life.reset();">Clear Grid</a></li>
+                        <li><a id="startBtn" href="#" onClick="life.startStopLife();">Start / Stop</a></li>
+                        <li><a id="nextBtn" href="#" onclick="life.nextLife();">Next Step</a></li>
+                        <li><a id="resetBtn" href="#" onclick="life.reset();">Clear Grid</a></li>
                         <li><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Wiki / Rules</a></li>
+                       
                     </ul>
+
                 </nav>
             </header>
         </div>
-
-        <div class="main-container">
+        <canvas id="lifeGrid" height="450"></canvas>
+       <!--  <div class="main-container">
             <div class="main wrapper clearfix">
-                <canvas id="lifeGrid" width="1050" height="450"></canvas>
-            </div> <!-- #main -->
-        </div> <!-- #main-container -->
+                
+            </div>
+        </div> #main-container -->
 
         <div class="footer-container">
             <footer class="wrapper">
-                <div style="float:left;">
-                    <h3>Luiz Philip M. Santos: Mindvalley Coding Challenge</h3>
+                <div style="float:left;width:80%;text-align:left;">
+                   <h3>Luiz Philip M. Santos: Mindvalley Coding Challenge</a></h3>
                 </div>
-                <div style="float:right;">
-                    <input type="button" value="-" onclick="life.adjustCellSpeed(false); $('#speed').text(100 - (life.speed / 10));">
-                    Speed: <span id="speed"></span> / 100%
-                    <input type="button" value="+" onclick="life.adjustCellSpeed(true); $('#speed').text(100 - (life.speed / 10));">
+                <div style="float:right;margin-top:10px;width:20%;">
+                    <div>
+                        <input type="button" value="-" onclick="life.adjustCellSpeed(false); $('#speed').text(100 - (life.speed / 10));">
+                        Speed: <span id="speed"></span> / 100%
+                        <input type="button" value="+" onclick="life.adjustCellSpeed(true); $('#speed').text(100 - (life.speed / 10));">
+                        <a href="#" id="vaderBtn" style="margin-left:1%;" onClick="life.createDarthVader();"><p>Discover the Dark Side </p></a>
+                    </div>
+                    <audio style="display:none;" id="imperial" controls="controls">  
+                       <source src="sounds/darthvader.mp3" />  
+                    </audio>
                 </div>
             </footer>
         </div>

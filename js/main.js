@@ -1,6 +1,7 @@
 // Script Notes:
 // 14-12-2015: Coded canvas properties
 // 15-12-2015: Applied GOL Logic and basic buttons
+// 16-12-2015: Developed canvas to be responsive
 
 // GOL Properties and Behavior
 var life = (function () {
@@ -10,6 +11,7 @@ var life = (function () {
         next = [], // next generation
         speed = 100, // default speed
         timeout,
+        timer,
         alive = false,
         x,
         y,
@@ -142,8 +144,14 @@ var life = (function () {
         }
     }
 
-    function initLifeGrid(canvasSelector) {
-        graphics.initCanvas(canvasSelector);
+    function initLifeGrid(canvasSelector, isFirstLoad) {
+
+        if (isFirstLoad){
+            graphics.initCanvas(canvasSelector);
+        }else{
+             graphics.ctx.canvas.width = $(window).width();
+        }
+
         life.xCells = Math.floor((graphics.canvas.width - 1) / graphics.cellSize);
         life.yCells = Math.floor((graphics.canvas.height - 1) / graphics.cellSize);
 
@@ -160,19 +168,56 @@ var life = (function () {
                 life.prev[x][y] = false;
             }
         }
-        graphics.ctx.fillRect(life.xCells * graphics.cellSize, 0, 1, life.yCells * graphics.cellSize);
         for (y = 0; y < life.yCells; y++) {
             graphics.ctx.fillRect(0, y * graphics.cellSize, life.xCells * graphics.cellSize, 1);
         }
+        
+        // draw edges
+        graphics.ctx.fillRect(life.xCells * graphics.cellSize, 0, 1, life.yCells * graphics.cellSize);
         graphics.ctx.fillRect(0, life.yCells * graphics.cellSize, life.xCells * graphics.cellSize, 1);
-        $(canvasSelector).mousedown(graphics.handleMouse);
-        $('body').mouseup(function (e) {
-            $(graphics.canvasSelector).unbind('mousemove');
-        });
+       
+        if (isFirstLoad){
+            $(canvasSelector).mousedown(graphics.handleMouse);
+            $('body').mouseup(function (e) {
+                $(graphics.canvasSelector).unbind('mousemove');
+            });
+        }
+        
     }
 
     function isAlive() {
         return alive;
+    }
+
+    // Summons the Dark Lord
+    function createDarthVader(){
+
+        if (life.xCells > 75){
+            alert("Temporarily removed the Clear and Dark Side buttons. \n The Dark Side will not be stopped!");
+            $("#resetBtn").css({"color":"#888888", display: "none"})
+            $("#vaderBtn").css({"color":"#888888", display: "none"})
+            life.reset();
+            var darth = [];
+            var i = 0;
+            darth = summonDarkLord();
+            var darthLength = darth.length;
+            var vid = document.getElementById("imperial");
+            vid.play();
+            (function iterator() {
+                eval(darth[i]);
+
+                if(++i<darthLength) {
+                    setTimeout(iterator, 45);
+                }else{
+                    vid.pause();
+                    vid.currentTime = 0;
+                    $("#resetBtn").css({"color":"#FFFFFF", display: "block"})
+                    $("#vaderBtn").css({"color":"#000000", display: "block"})
+                }
+            })();
+        }else{
+            alert("The Dark Side needs more grid! Set it to landscape or try it on a larger screen.");
+        }
     }
 
     return {
@@ -187,9 +232,11 @@ var life = (function () {
         reset: reset,
         nextLife: nextLife,
         startStopLife: startStopLife,
-        adjustCellSpeed: adjustCellSpeed
+        adjustCellSpeed: adjustCellSpeed,
+        createDarthVader: createDarthVader
     };
 }());
+
 
 // Canvas Properties and Behavior
 var graphics = (function () {
@@ -205,6 +252,7 @@ var graphics = (function () {
     function initCanvas(canvasSelector) {
         graphics.canvas = $(canvasSelector).get(0);
         graphics.ctx = graphics.canvas.getContext('2d');
+        graphics.ctx.canvas.width = $(window).width();
         graphics.canvasSelector = canvasSelector;
     }
 
