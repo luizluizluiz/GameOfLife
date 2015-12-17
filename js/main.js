@@ -192,7 +192,7 @@ var life = (function () {
     // Summons the Dark Lord
     function createDarthVader(){
 
-        if (life.xCells > 75){
+        if (life.xCells > 75 && life.yCells > 30){
             alert("Temporarily removed the Clear and Dark Side buttons. \n The Dark Side will not be stopped!");
             $("#resetBtn").css({"color":"#888888", display: "none"})
             $("#vaderBtn").css({"color":"#888888", display: "none"})
@@ -207,7 +207,7 @@ var life = (function () {
                 eval(darth[i]);
 
                 if(++i<darthLength) {
-                    setTimeout(iterator, 45);
+                    setTimeout(iterator, 23.5);
                 }else{
                     vid.pause();
                     vid.currentTime = 0;
@@ -216,7 +216,7 @@ var life = (function () {
                 }
             })();
         }else{
-            alert("The Dark Side needs more grid! Set it to landscape or try it on a larger screen.");
+            alert("The Dark Side needs more grid! Try it on a larger screen.");
         }
     }
 
